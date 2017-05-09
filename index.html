@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html ng-app="book">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	 
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body style="background-color: #800000">
+	
+<style>
+	header {
+border-bottom: 5px solid #CDB380;
+}
+
+</style>
+	
+
+<div class="container" ng-controller="BookController as book" >
+		
+	
+		
+	<header >
+		<div class="container-fluid" style="background-color: #033649" width="600 px" >
+		<font color="#FFF" class="text text-center"><h1>LIBROS</h1></font>
+		
+		<div class="row col-lg-4">
+			<div >
+				<div >
+					<font color="#FFF">
+						 <label >Filtra tu búsqueda: </label>
+					</font>
+        			
+        			 <input type="text" ng-model="buscador" />
+        		</div>
+			</div>
+		</div>
+		<div class="row col-lg-7">
+			<font color="#FFF">
+				<label>Establece un orden: </label>
+			</font>
+        		
+	        		<select ng-model="tipoOrden">
+				      	 
+				        <option value="name">nombre</option>
+				        <option value="price">precio</option>
+				      
+				   
+				     </select>
+</div>
+		
+
+	</div>
+
+	</header>
+	
+		
+	
+		<ul class="list-group">
+			
+			    
+			
+			<li class="list-group-item" ng-repeat="product in book.products| filter:buscador | orderBy: tipoOrden">
+
+
+				
+				<h1>{{product.name}}<span class="label label-success pull-center">{{product.price | currency}}</span>
+
+					<button class="btn btn-primary pull-right">Comprar</button>
+				</h1>
+				
+				<div class="container">
+					<div class="row col-lg-3 ">
+						<img ng-src="{{product.images[0].full}}" alt="" width="250 px" align="left">
+					</div>
+					<div class="row col-lg-9">
+						<section  ng-controller="PanelController as panel">
+					<ul class="nav nav-tabs">
+						<li ng-class="{active: panel.isSelected(1)}" ><a href="" ng-click="panel.selectTab(1)" >Especificaciones</a>
+						</li>
+						<li ng-class="{active: panel.isSelected(2)}"><a href="" ng-click="panel.selectTab(2)">Resumen y sinopsis.</a>
+						</li>
+						
+					</ul>
+					
+					<div class="panel" ng-show="panel.isSelected(1)">
+						<h2 >Autor:   {{product.author}}</h2>
+						<br>
+						<h3>Editorial:   {{product.editorial}}</h3>
+
+					</div>
+					<div class="panel" ng-show="panel.isSelected(2)">
+						<section>
+							<p>	{{product.description}}</p>
+						</section>		
+				</section>
+					</div>
+				</div>		
+				
+			</li>
+
+		</ul>
+
+	</div> 
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script src="angular-route.min.js "></script>
+	<script src="js/app.js"></script> 
+</body>
+</html>
